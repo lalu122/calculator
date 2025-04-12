@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Root Variables */
   :root {
     --primary: #6366f1; /* Indigo 500 */
     --secondary: #10b981; /* Emerald 500 */
@@ -18,152 +17,79 @@
     --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   }
 
-  /* Global Reset and Body Styling */
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg-gradient);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 40px 20px;
-    color: var(--text);
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg-gradient);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+    padding:40px 20px;
+    color:var(--text);
+    position:relative;
   }
+
+  /* Info button */
+  .info-btn{
+    position:absolute;
+    top:24px;right:24px;
+    width:40px;height:40px;
+    border-radius:50%;
+    border:2px solid var(--primary);
+    background:transparent;
+    color:var(--primary);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .3s ease,color .3s ease,transform .2s ease;
+    font-size:1.25rem;font-weight:700; /* make the single letter more prominent */
+  }
+  .info-btn:hover{transform:scale(1.05);}  
+  .info-btn:hover,.info-btn.active{background:var(--primary);color:#fff;}
 
   /* Toggle Buttons */
-  .toggle-container {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    justify-content: center;
+  .toggle-container{display:flex;gap:16px;margin-bottom:32px;flex-wrap:wrap;justify-content:center;}
+  .toggle-btn{
+    padding:12px 24px;border:2px solid var(--primary);background:transparent;color:var(--primary);
+    font-weight:600;border-radius:9999px;cursor:pointer;transition:background .3s ease,color .3s ease;
   }
-  .toggle-btn {
-    padding: 12px 24px;
-    border: 2px solid var(--primary);
-    background: transparent;
-    color: var(--primary);
-    font-weight: 600;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  .toggle-btn.active,
-  .toggle-btn:hover {
-    background: var(--primary);
-    color: #fff;
-  }
+  .toggle-btn.active,.toggle-btn:hover{background:var(--primary);color:#fff;}
 
   /* Calculator Card */
-  .calculator {
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    width: 100%;
-    max-width: 460px;
-    padding: 40px 48px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
+  .calculator{
+    background:var(--card-bg);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);
+    width:100%;max-width:460px;padding:40px 48px;margin-bottom:20px;transition:transform .3s ease;
   }
-  .calculator:hover {
-    transform: translateY(-5px);
-  }
-  .hidden { display: none; }
-  @media (max-width: 480px) {
-    .calculator {
-      padding: 28px 24px;
-      border-radius: 16px;
-    }
-    h1 { font-size: 1.5rem; }
-  }
-  h1 {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-    font-weight: 700;
-    color: var(--primary);
-  }
+  .calculator:hover{transform:translateY(-5px);}  .hidden{display:none;}
+  @media(max-width:480px){.calculator{padding:28px 24px;border-radius:16px;}h1{font-size:1.5rem;}}
+  h1{text-align:center;font-size:1.8rem;margin-bottom:2rem;font-weight:700;color:var(--primary);}  
 
   /* Form Elements */
-  .field { margin-bottom: 24px; }
-  label { display: block; font-weight: 600; margin-bottom: 8px; }
-  input[type="number"] {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    font-size: 1rem;
-    background: #fff;
-    color: var(--muted);
-    transition: border 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  .field{margin-bottom:24px;}
+  label{display:block;font-weight:600;margin-bottom:8px;}
+  input[type="number"]{
+    width:100%;padding:12px 16px;border:1px solid #d1d5db;border-radius:10px;font-size:1rem;background:#fff;color:var(--muted);
+    transition:border .25s ease,color .25s ease,box-shadow .25s ease;
   }
-  input[type="number"].edited { color: var(--text); }
-  input[type="number"]:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
-  }
-  input::placeholder { color: var(--muted); }
-  .radio-group {
-    display: flex;
-    gap: 24px;
-    margin-top: 4px;
-  }
-  .radio-group input[type="radio"] { accent-color: var(--primary); }
-  .radio-group label { font-weight: 500; cursor: pointer; user-select: none; }
+  input[type="number"].edited{color:var(--text);}  input[type="number"]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(99,102,241,0.2);}  input::placeholder{color:var(--muted);}  .radio-group{display:flex;gap:24px;margin-top:4px;}  .radio-group input[type="radio"]{accent-color:var(--primary);}  .radio-group label{font-weight:500;cursor:pointer;user-select:none;}
 
-  /* Result and Growth Boxes */
-  .result,
-  .growth {
-    text-align: center;
-    border-radius: 12px;
-    padding: 14px 24px;
-    margin-bottom: 16px;
-    transition: background 0.3s ease, transform 0.3s ease;
-  }
-  .result {
-    font-size: 2rem;
-    font-weight: 700;
-    background: rgba(99,102,241,0.1);
-    color: var(--primary);
-  }
-  .result small {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-top: 6px;
-    font-weight: 500;
-  }
-  .growth {
-    font-size: 1.2rem;
-    font-weight: 600;
-    background: rgba(16,185,129,0.1);
-    color: var(--secondary);
-  }
-  .growth small {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-top: 4px;
-    font-weight: 500;
-  }
+  /* Description helper text */
+  .desc{font-size:0.85rem;color:var(--muted);margin-top:6px;display:none;}
 
-  /* Disclaimer */
-  .disclaimer {
-    font-size: 0.8rem;
-    color: var(--muted);
-    max-width: 460px;
-    text-align: center;
-    margin-top: 24px;
-    line-height: 1.4;
-  }
+  /* Result and Growth */
+  .result,.growth{text-align:center;border-radius:12px;padding:14px 24px;margin-bottom:16px;transition:background .3s ease,transform .3s ease;}
+  .result{font-size:2rem;font-weight:700;background:rgba(99,102,241,0.1);color:var(--primary);}  .result small{display:block;font-size:.85rem;color:var(--muted);margin-top:6px;font-weight:500;}
+  .growth{font-size:1.2rem;font-weight:600;background:rgba(16,185,129,0.1);color:var(--secondary);}  .growth small{display:block;font-size:.8rem;color:var(--muted);margin-top:4px;font-weight:500;}
+
+  .disclaimer{font-size:.8rem;color:var(--muted);max-width:460px;text-align:center;margin-top:24px;line-height:1.4;}
 </style>
 </head>
 <body>
+  <!-- Info button -->
+  <button id="infoBtn" class="info-btn" aria-label="Show descriptions">i</button>
+
   <!-- Toggle Buttons -->
   <div class="toggle-container">
     <button class="toggle-btn active" data-target="calc1">PCEX Earnings Estimator</button>
@@ -176,6 +102,7 @@
     <div class="field">
       <label for="amount1">Amount in PCEX ($)</label>
       <input type="number" id="amount1" value="0" placeholder="0" min="0" step="0.01">
+      <p class="desc">Write the value you currently have in PCEX.</p>
     </div>
     <div class="field">
       <label>Number of fixed signals</label>
@@ -183,16 +110,18 @@
         <label><input type="radio" name="fixed1" value="4" checked> 4</label>
         <label><input type="radio" name="fixed1" value="6"> 6</label>
       </div>
+      <p class="desc">If you are a new joiner without anyone under you, this will be <strong>4</strong>.</p>
     </div>
     <div class="field">
       <label for="additional1">Additional signals (optional)</label>
       <input type="number" id="additional1" value="0" placeholder="0" min="0" step="1">
+      <p class="desc">Enter any extra signals you have. Example: for 5 days it’s <strong>4 × 5 = 20</strong>.</p>
     </div>
     <div class="field">
       <label for="days1">Number of days to invest</label>
       <input type="number" id="days1" value="0" placeholder="0" min="0" max="30" step="1">
+      <p class="desc">How many days will you keep the money in PCEX?</p>
     </div>
-    <!-- Swapped order: Growth displayed above Projected Total -->
     <div class="growth" id="growth1">$0.00<small>Growth</small></div>
     <div class="result" id="total1">$0.00<small>Projected total</small></div>
   </div>
@@ -203,10 +132,12 @@
     <div class="field">
       <label for="desired2">Desired Value ($)</label>
       <input type="number" id="desired2" value="0" placeholder="0" min="0" step="0.01">
+      <p class="desc">Target amount you want your PCEX account to reach.</p>
     </div>
     <div class="field">
       <label for="amount2">Amount in PCEX ($)</label>
       <input type="number" id="amount2" value="0" placeholder="0" min="0" step="0.01">
+      <p class="desc">Current balance in your PCEX account.</p>
     </div>
     <div class="field">
       <label>Number of fixed signals</label>
@@ -214,86 +145,90 @@
         <label><input type="radio" name="fixed2" value="4" checked> 4</label>
         <label><input type="radio" name="fixed2" value="6"> 6</label>
       </div>
+      <p class="desc">If you are a new joiner without anyone under you, this will be <strong>4</strong>.</p>
     </div>
     <div class="field">
       <label for="additional2">Additional signals (optional)</label>
       <input type="number" id="additional2" value="0" placeholder="0" min="0" step="1">
+      <p class="desc">Enter any extra signals you have. Example: for 5 days it’s <strong>4 × 5 = 20</strong>.</p>
     </div>
     <div class="result" id="daysResult">0 days<small>Estimated time</small></div>
   </div>
 
   <script>
     /******** Utility Functions ********/
-    function clearOnFirstFocus(el) {
-      el.addEventListener('focus', () => {
-        if (!el.dataset.cleared) {
-          el.value = '';
-          el.dataset.cleared = 'true';
-        }
-      });
-    }
-    function setEditedState(el, def) {
-      parseFloat(el.value) == def ? el.classList.remove('edited') : el.classList.add('edited');
-    }
+    function clearOnFirstFocus(el){el.addEventListener('focus',()=>{if(!el.dataset.cleared){el.value='';el.dataset.cleared='true';}});}    
+    function setEditedState(el,def){parseFloat(el.value)==def?el.classList.remove('edited'):el.classList.add('edited');}
 
-    /******** Toggle Logic ********/
-    const buttons = document.querySelectorAll('.toggle-btn');
-    buttons.forEach(btn => btn.addEventListener('click', () => {
-      if (btn.classList.contains('active')) return;
-      buttons.forEach(b => b.classList.remove('active'));
+    /******** Toggle Calculators ********/
+    const buttons=document.querySelectorAll('.toggle-btn');
+    buttons.forEach(btn=>btn.addEventListener('click',()=>{
+      if(btn.classList.contains('active')) return;
+      buttons.forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      const target = btn.dataset.target;
-      document.querySelectorAll('.calculator').forEach(card => {
-        card.id === target ? card.classList.remove('hidden') : card.classList.add('hidden');
+      const target=btn.dataset.target;
+      document.querySelectorAll('.calculator').forEach(card=>{
+        card.id===target?card.classList.remove('hidden'):card.classList.add('hidden');
       });
+      hideDescriptions();
     }));
 
-    /******** Calculator 1 ********/
-    const defaults1 = { amount1: 0, additional1: 0, days1: 0 };
-    ['amount1', 'additional1', 'days1'].forEach(id => {
-      const el = document.getElementById(id);
-      clearOnFirstFocus(el);
-      el.addEventListener('input', updateTotal1);
+    /******** Info descriptions ********/
+    const infoBtn=document.getElementById('infoBtn');
+    infoBtn.addEventListener('click',()=>{
+      const activeCalc=document.querySelector('.calculator:not(.hidden)');
+      const descs=activeCalc.querySelectorAll('.desc');
+      const showing=[...descs].some(d=>d.style.display==='block');
+      if(showing){
+        descs.forEach(d=>d.style.display='none');
+        infoBtn.classList.remove('active');
+      }else{
+        descs.forEach(d=>d.style.display='block');
+        infoBtn.classList.add('active');
+      }
     });
-    document.querySelectorAll('input[name="fixed1"]').forEach(r => r.addEventListener('change', updateTotal1));
-    function getFixed1() {
-      return parseInt(document.querySelector('input[name="fixed1"]:checked').value, 10);
+
+    function hideDescriptions(){
+      document.querySelectorAll('.desc').forEach(d=>d.style.display='none');
+      infoBtn.classList.remove('active');
     }
-    function updateTotal1() {
-      const amount = parseFloat(document.getElementById('amount1').value) || 0;
-      const additional = parseInt(document.getElementById('additional1').value, 10) || 0;
-      const days = parseInt(document.getElementById('days1').value, 10) || 0;
-      const fixed = getFixed1();
-      const total = amount * Math.pow(1.005, fixed * days + additional);
-      const growth = total - amount;
-      document.getElementById('total1').firstChild.textContent = total.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      document.getElementById('growth1').firstChild.textContent = growth.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      ['amount1', 'additional1', 'days1'].forEach(id => setEditedState(document.getElementById(id), defaults1[id]));
+
+    /******** Calculator 1 ********/
+    const defaults1={amount1:0,additional1:0,days1:0};
+    ['amount1','additional1','days1'].forEach(id=>{
+      const el=document.getElementById(id);clearOnFirstFocus(el);el.addEventListener('input',updateTotal1);
+    });
+    document.querySelectorAll('input[name="fixed1"]').forEach(r=>r.addEventListener('change',updateTotal1));
+    function getFixed1(){return parseInt(document.querySelector('input[name="fixed1"]:checked').value,10);}    
+    function updateTotal1(){
+      const amount=parseFloat(document.getElementById('amount1').value)||0;
+      const additional=parseInt(document.getElementById('additional1').value,10)||0;
+      const days=parseInt(document.getElementById('days1').value,10)||0;
+      const fixed=getFixed1();
+      const total=amount*Math.pow(1.005,fixed*days+additional);
+      const growth=total-amount;
+      document.getElementById('total1').firstChild.textContent='$'+total.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+      document.getElementById('growth1').firstChild.textContent='$'+growth.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+      ['amount1','additional1','days1'].forEach(id=>setEditedState(document.getElementById(id),defaults1[id]));
     }
     updateTotal1();
 
     /******** Calculator 2 ********/
-    const defaults2 = { desired2: 0, amount2: 0, additional2: 0 };
-    ['desired2', 'amount2', 'additional2'].forEach(id => {
-      const el = document.getElementById(id);
-      clearOnFirstFocus(el);
-      el.addEventListener('input', updateDays2);
+    const defaults2={desired2:0,amount2:0,additional2:0};
+    ['desired2','amount2','additional2'].forEach(id=>{
+      const el=document.getElementById(id);clearOnFirstFocus(el);el.addEventListener('input',updateDays2);
     });
-    document.querySelectorAll('input[name="fixed2"]').forEach(r => r.addEventListener('change', updateDays2));
-    function getFixed2() {
-      return parseInt(document.querySelector('input[name="fixed2"]:checked').value, 10);
-    }
-    function updateDays2() {
-      const desired = parseFloat(document.getElementById('desired2').value) || 0;
-      const amount = parseFloat(document.getElementById('amount2').value) || 0;
-      const additional = parseInt(document.getElementById('additional2').value, 10) || 0;
-      const fixed = getFixed2();
-      let days = 0;
-      if (amount > 0 && desired > amount) {
-        days = (Math.log(desired / amount) / Math.log(1.005) - additional) / fixed;
-      }
-      document.getElementById('daysResult').firstChild.textContent = days.toFixed(2) + ' days';
-      ['desired2', 'amount2', 'additional2'].forEach(id => setEditedState(document.getElementById(id), defaults2[id]));
+    document.querySelectorAll('input[name="fixed2"]').forEach(r=>r.addEventListener('change',updateDays2));
+    function getFixed2(){return parseInt(document.querySelector('input[name="fixed2"]:checked').value,10);}    
+    function updateDays2(){
+      const desired=parseFloat(document.getElementById('desired2').value)||0;
+      const amount=parseFloat(document.getElementById('amount2').value)||0;
+      const additional=parseInt(document.getElementById('additional2').value,10)||0;
+      const fixed=getFixed2();
+      let days=0;
+      if(amount>0&&desired>amount){days=(Math.log(desired/amount)/Math.log(1.005)-additional)/fixed;}
+      document.getElementById('daysResult').firstChild.textContent=days.toFixed(2)+' days';
+      ['desired2','amount2','additional2'].forEach(id=>setEditedState(document.getElementById(id),defaults2[id]));
     }
     updateDays2();
   </script>
