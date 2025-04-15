@@ -264,7 +264,7 @@
       const additional = parseInt(document.getElementById('additional1').value, 10) || 0;
       const days = parseInt(document.getElementById('days1').value, 10) || 0;
       const fixed = getFixed1();
-      const total = amount * Math.pow(1.005, fixed * days + additional);
+      const total = amount * Math.pow(1.0055, fixed * days + additional);
       const growth = total - amount;
       document.getElementById('total1').firstChild.textContent = total.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
       document.getElementById('growth1').firstChild.textContent = growth.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -290,7 +290,7 @@
       const fixed = getFixed2();
       let days = 0;
       if (amount > 0 && desired > amount) {
-        days = (Math.log(desired / amount) / Math.log(1.005) - additional) / fixed;
+        days = (Math.log(desired / amount) / Math.log(1.0055) - additional) / fixed;
       }
       document.getElementById('daysResult').firstChild.textContent = days.toFixed(2) + ' days';
       ['desired2', 'amount2', 'additional2'].forEach(id => setEditedState(document.getElementById(id), defaults2[id]));
