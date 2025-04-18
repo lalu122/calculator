@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PCEX Calculators</title>
+<title>Calculators</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -166,22 +166,22 @@
 <body>
   <!-- Toggle Buttons -->
   <div class="toggle-container">
-    <button class="toggle-btn active" data-target="calc1">PCEX Earnings Estimator</button>
-    <button class="toggle-btn" data-target="calc2">PCEX Growth Time Estimator</button>
+    <button class="toggle-btn active" data-target="calc1">Earnings Estimator</button>
+    <button class="toggle-btn" data-target="calc2">Growth Time Estimator</button>
   </div>
 
   <!-- Earnings Estimator -->
   <div class="calculator" id="calc1">
-    <h1>PCEX Earnings Estimator</h1>
+    <h1>Earnings Estimator</h1>
     <div class="field">
-      <label for="amount1">Amount in PCEX ($)</label>
+      <label for="amount1">Amount in Platform ($)</label>
       <input type="number" id="amount1" value="0" placeholder="0" min="0" step="0.01">
     </div>
     <div class="field">
       <label>Number of fixed signals</label>
       <div class="radio-group">
-        <label><input type="radio" name="fixed1" value="4" checked> 4</label>
-        <label><input type="radio" name="fixed1" value="6"> 6</label>
+        <label><input type="radio" name="fixed1" value="3" checked> 3</label> <!-- CHANGED: from 4 to 3 -->
+        <label><input type="radio" name="fixed1" value="4"> 4</label> <!-- CHANGED: from 6 to 4 -->
       </div>
     </div>
     <div class="field">
@@ -199,20 +199,20 @@
 
   <!-- Growth Time Estimator -->
   <div class="calculator hidden" id="calc2">
-    <h1>PCEX Growth Time Estimator</h1>
+    <h1>Platform Growth Time Estimator</h1>
     <div class="field">
       <label for="desired2">Desired Value ($)</label>
       <input type="number" id="desired2" value="0" placeholder="0" min="0" step="0.01">
     </div>
     <div class="field">
-      <label for="amount2">Amount in PCEX ($)</label>
+      <label for="amount2">Amount in Platform ($)</label>
       <input type="number" id="amount2" value="0" placeholder="0" min="0" step="0.01">
     </div>
     <div class="field">
       <label>Number of fixed signals</label>
       <div class="radio-group">
-        <label><input type="radio" name="fixed2" value="4" checked> 4</label>
-        <label><input type="radio" name="fixed2" value="6"> 6</label>
+        <label><input type="radio" name="fixed2" value="3" checked> 3</label> <!-- CHANGED: from 4 to 3 -->
+        <label><input type="radio" name="fixed2" value="4"> 4</label> <!-- CHANGED: from 6 to 4 -->
       </div>
     </div>
     <div class="field">
@@ -223,7 +223,7 @@
   </div>
 
   <script>
-    /******** Utility Functions ********/
+    /******** Utility Functions ***/
     function clearOnFirstFocus(el) {
       el.addEventListener('focus', () => {
         if (!el.dataset.cleared) {
@@ -236,7 +236,7 @@
       parseFloat(el.value) == def ? el.classList.remove('edited') : el.classList.add('edited');
     }
 
-    /******** Toggle Logic ********/
+    /******** Toggle Logic ***/
     const buttons = document.querySelectorAll('.toggle-btn');
     buttons.forEach(btn => btn.addEventListener('click', () => {
       if (btn.classList.contains('active')) return;
@@ -248,7 +248,7 @@
       });
     }));
 
-    /******** Calculator 1 ********/
+    /******** Calculator 1 ***/
     const defaults1 = { amount1: 0, additional1: 0, days1: 0 };
     ['amount1', 'additional1', 'days1'].forEach(id => {
       const el = document.getElementById(id);
@@ -264,7 +264,7 @@
       const additional = parseInt(document.getElementById('additional1').value, 10) || 0;
       const days = parseInt(document.getElementById('days1').value, 10) || 0;
       const fixed = getFixed1();
-      const total = amount * Math.pow(1.0055, fixed * days + additional);
+      const total = amount * Math.pow(1.005, fixed * days + additional);
       const growth = total - amount;
       document.getElementById('total1').firstChild.textContent = total.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
       document.getElementById('growth1').firstChild.textContent = growth.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -272,7 +272,7 @@
     }
     updateTotal1();
 
-    /******** Calculator 2 ********/
+    /******** Calculator 2 ***/
     const defaults2 = { desired2: 0, amount2: 0, additional2: 0 };
     ['desired2', 'amount2', 'additional2'].forEach(id => {
       const el = document.getElementById(id);
@@ -290,7 +290,7 @@
       const fixed = getFixed2();
       let days = 0;
       if (amount > 0 && desired > amount) {
-        days = (Math.log(desired / amount) / Math.log(1.0055) - additional) / fixed;
+        days = (Math.log(desired / amount) / Math.log(1.005) - additional) / fixed;
       }
       document.getElementById('daysResult').firstChild.textContent = days.toFixed(2) + ' days';
       ['desired2', 'amount2', 'additional2'].forEach(id => setEditedState(document.getElementById(id), defaults2[id]));
